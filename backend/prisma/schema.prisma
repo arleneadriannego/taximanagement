@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Insurance {
+  id                String       @id @default(cuid())
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  taxis             Taxi[]
+  provider          String
+  policyNumber      String
+  coverageStartDate DateTime
+  coveragEndDate    DateTime
+  coverageType      CoverageType
+  isActive          Boolean      @default(true)
+}
+
+model User {
+  id                 String          @id @default(cuid())
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  firstName          String
+  middleName         String?
+  lastName           String?
+  role               UserRole
+  birthdate          DateTime?
+  contactNumber      String
+  emailAddress       String?
+  licenseNumber      String
+  licenseExpiry      DateTime
+  isActive           Boolean         @default(true)
+  drivers            TaxiDriverMap[] @relation("drivers")
+  releasingOfficers  TaxiDriverMap?  @relation("releasingOfficers")
+  validatingOfficers TaxiDriverMap[] @relation("validatingOfficers")
+}
+
+model Taxi {
+  id                String          @id @default(cuid())
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  bodyNumber        String
+  plateNumber       String?
+  conductionSticker String
+  make              String
+  model             String
+  variant           String
+  color             String
+  engineNumber      String
+  chassisNumber     String
+  isActive          Boolean         @default(true)
+  insurance         Insurance?      @relation(fields: [insuranceId], references: [id])
+  insuranceId       String?
+  TaxiDriverMap     TaxiDriverMap[]
+}
+
+model TaxiDriverMap {
+  id                  String    @id @default(cuid())
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  driver              User      @relation("drivers", fields: [driverId], references: [id])
+  driverId            String
+  taxi                Taxi      @relation(fields: [taxiId], references: [id])
+  taxiId              String
+  startAt             DateTime
+  releaseOfficer      User      @relation("releasingOfficers", fields: [releaseOfficerId], references: [id])
+  releaseOfficerId    String
+  endAt               DateTime?
+  validatingOfficer   User      @relation("validatingOfficers", fields: [validatingOfficerId], references: [id])
+  validatingOfficerId String
+  isActive            Boolean   @default(true)
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  DRIVER
+}
+
+enum CoverageType {
+  COMPREHENSIVE_COVERAGE
+  LIABILITY_DAMAGE
+  COLLISION_COVERAGE
+  PERSONAL_INJURY_COVERAGE
+}
