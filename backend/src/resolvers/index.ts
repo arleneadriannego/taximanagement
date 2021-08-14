@@ -4,7 +4,6 @@ import {
   UpdateUserResolver,
   FindFirstUserResolver,
   FindManyUserResolver,
-  UserCrudResolver,
 
   // Taxi
   CreateTaxiResolver,
@@ -26,11 +25,12 @@ import {
   DeleteTaxiDriverMapResolver,
   FindFirstTaxiDriverMapResolver,
   FindManyTaxiDriverMapResolver,
-} from '@generated/type-graphql'
+} from '../generated/typegraphql-prisma'
+import { CustomUserResolver } from './user'
 
 export const resolvers = [
   // User
-  CreateUserResolver,
+  CustomUserResolver,
   UpdateUserResolver,
   FindFirstUserResolver,
   FindManyUserResolver,

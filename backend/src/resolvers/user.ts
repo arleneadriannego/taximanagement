@@ -1,14 +1,18 @@
 import 'reflect-metadata'
 import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql'
-import { User, UserCreateInput, UserRole } from '@generated/type-graphql'
-import { Context as PrismaContext } from '../context'
+import {
+  User,
+  UserCreateInput,
+  UserRole,
+} from '../generated/typegraphql-prisma'
+import { Context } from '../context'
 
 // custom resolver for User
 @Resolver((of) => User)
 export class CustomUserResolver {
-  @Mutation((returns) => UserDb)
+  @Mutation((returns) => User)
   async signUpUser(
-    @Ctx() { prisma }: PrismaContext,
+    @Ctx() { prisma }: Context,
     @Arg('data') data: UserCreateInput,
   ): Promise<User> {
     const {
