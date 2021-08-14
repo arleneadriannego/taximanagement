@@ -4,6 +4,7 @@ generator client {
 
 generator typegraphql {
   provider = "typegraphql-prisma"
+  output   = "../src/generated/typegraphql-prisma"
 }
 
 datasource db {
@@ -35,8 +36,8 @@ model User {
   birthdate          DateTime?
   contactNumber      String
   emailAddress       String?
-  licenseNumber      String
-  licenseExpiry      DateTime
+  licenseNumber      String?
+  licenseExpiry      DateTime?
   isActive           Boolean         @default(true)
   drivers            TaxiDriverMap[] @relation("drivers")
   releasingOfficers  TaxiDriverMap?  @relation("releasingOfficers")
