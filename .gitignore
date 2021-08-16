@@ -115,7 +115,6 @@ ehthumbs.db
 Thumbs.db
 
 # Prisma-related files
-prisma/migrations/
 src/generated/
 
 # Firebase cache
