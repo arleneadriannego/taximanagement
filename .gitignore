@@ -113,4 +113,5 @@ ehthumbs.db
 Thumbs.db
 
 # Prisma-related files
-backend/prisma/migrations/
+prisma/migrations/
+src/generated/
