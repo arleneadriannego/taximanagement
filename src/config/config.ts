@@ -4,16 +4,14 @@ import { resolve } from 'path'
 
 dotenv.config({ path: resolve('.env') })
 
-const {
-  PORT,
-  DATABASE_URL,
-  FIREBASE_CREDENTIALS_PATH,
-} = process.env
+const { PORT, DATABASE_URL, FIREBASE_CREDENTIALS } = process.env
 
 const config = {
   port: PORT!,
   firebase: {
-    key: FIREBASE_CREDENTIALS_PATH!,
+    key: JSON.parse(
+      Buffer.from(FIREBASE_CREDENTIALS!, 'base64').toString('ascii'),
+    ),
   },
   databaseUrl: DATABASE_URL!,
 }
