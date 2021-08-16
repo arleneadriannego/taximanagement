@@ -1,0 +1,132 @@
+mutation {
+  signUpUser(
+    data: {
+      firstName: "Noe"
+      middleName: "A"
+      lastName: "Archiviste"
+      role: SUPER_ADMIN
+      contactNumber: "+52542525555"
+      birthdate: "2000-08-14"
+    }
+  ) {
+    id
+    firstName
+    lastName
+    middleName
+    birthdate
+    contactNumber
+    emailAddress
+    isActive
+    licenseNumber
+    licenseExpiry
+    role
+    createdAt
+    updatedAt
+  }
+}
+
+mutation {
+  signUpUser(
+    data: {
+      firstName: "Vanitas"
+      middleName: "A"
+      lastName: "BLUE"
+      role: DRIVER
+      contactNumber: "+52542525555"
+      emailAddress: "aabgo.test+noe@gmail.com"
+      birthdate: "2000-08-14"
+      licenseNumber: "DRIVERS-0091-12333"
+      licenseExpiry: "2025-10-14"
+    }
+  ) {
+    id
+    firstName
+    lastName
+    middleName
+    birthdate
+    contactNumber
+    emailAddress
+    isActive
+    licenseNumber
+    licenseExpiry
+    role
+    createdAt
+    updatedAt
+  }
+}
+
+query {
+  user(where: { id: "" }) {
+    id
+    firstName
+    lastName
+    middleName
+    birthdate
+    contactNumber
+    emailAddress
+    isActive
+    licenseNumber
+    licenseExpiry
+    role
+    createdAt
+    updatedAt
+  }
+}
+
+query {
+  users(
+    where: { role: { equals: DRIVER } }
+    orderBy: { id: desc }
+    skip: 0
+    take: 5
+  ) {
+    id
+    firstName
+    lastName
+    middleName
+    birthdate
+    contactNumber
+    emailAddress
+    isActive
+    licenseNumber
+    licenseExpiry
+    role
+    createdAt
+    updatedAt
+  }
+}
+
+mutation {
+  updateUser(
+    where: { id: "" }
+    data: {
+      firstName: "Noe - 2"
+      middleName: "A"
+      lastName: "Archiviste"
+      role: SUPER_ADMIN
+      contactNumber: "+52542525555"
+      birthdate: "2000-08-14"
+    }
+  ) {
+    id
+    firstName
+    lastName
+    middleName
+    birthdate
+    contactNumber
+    emailAddress
+    isActive
+    licenseNumber
+    licenseExpiry
+    role
+    createdAt
+    updatedAt
+  }
+}
+
+mutation {
+  setUserToInactive(where: { id: "" }) {
+    id
+    isActive
+  }
+}

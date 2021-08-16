@@ -1,9 +1,31 @@
-# taximanagement
+# taximanagement-api
 
-A Taxi Management App that uses the following technologies:
+A Taxi Management API that uses the following technologies:
 
-1. Backend
-   - Apollo Server
-   - Prisma
-   - TypeGraphQL
-   - MySQL
+- Apollo Server
+- Prisma
+- TypeGraphQL
+- MySQL
+
+### Instructions:
+
+1. Create .env and fill in necessary configuration.
+2. Add firebase service account key file.
+
+3. Create/Migrate database
+
+   ```
+   npx prisma migrate dev --name <name>
+   ```
+
+4. Generate prisma schema
+
+   ```
+   npm run generate
+   ```
+
+5. Run app
+
+   ```
+   npm run dev
+   ```

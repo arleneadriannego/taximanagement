@@ -27,6 +27,8 @@ model Insurance {
 
 model User {
   id                 String          @id @default(cuid())
+  /// @TypeGraphQL.omit(output: true)
+  authId             String
   createdAt          DateTime        @default(now())
   updatedAt          DateTime        @updatedAt
   firstName          String
