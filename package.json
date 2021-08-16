@@ -16,6 +16,7 @@
     "apollo-server": "2.25.2",
     "class-validator": "0.13.1",
     "cuid": "2.1.8",
+    "firebase-admin": "^9.11.0",
     "graphql": "15.5.1",
     "graphql-fields": "2.0.3",
     "graphql-type-json": "0.3.2",

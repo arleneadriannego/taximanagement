@@ -1,9 +1,8 @@
 import {
   // User
-  CreateUserResolver,
-  UpdateUserResolver,
-  FindFirstUserResolver,
+  FindUniqueUserResolver,
   FindManyUserResolver,
+  DeleteUserResolver,
 
   // Taxi
   CreateTaxiResolver,
@@ -31,8 +30,8 @@ import { CustomUserResolver } from './user'
 export const resolvers = [
   // User
   CustomUserResolver,
-  UpdateUserResolver,
-  FindFirstUserResolver,
+  DeleteUserResolver,
+  FindUniqueUserResolver,
   FindManyUserResolver,
 
   // Taxi
