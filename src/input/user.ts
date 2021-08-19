@@ -6,7 +6,7 @@ import { UserRole } from '../generated/typegraphql-prisma'
 const minDate = new Date()
 minDate.setMonth(minDate.getMonth() + 3)
 
-// custom UserCreateInput
+// custom UserCreateUpdateInput
 @InputType()
 export class UserCreateUpdateInput {
   @Field(() => String)

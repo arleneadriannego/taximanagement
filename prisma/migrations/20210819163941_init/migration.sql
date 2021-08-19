@@ -6,10 +6,11 @@ CREATE TABLE `Insurance` (
     `provider` VARCHAR(191) NOT NULL,
     `policyNumber` VARCHAR(191) NOT NULL,
     `coverageStartDate` DATETIME(3) NOT NULL,
-    `coveragEndDate` DATETIME(3) NOT NULL,
+    `coverageEndDate` DATETIME(3) NOT NULL,
     `coverageType` ENUM('COMPREHENSIVE_COVERAGE', 'LIABILITY_DAMAGE', 'COLLISION_COVERAGE', 'PERSONAL_INJURY_COVERAGE') NOT NULL,
     `isActive` BOOLEAN NOT NULL DEFAULT true,
 
+    UNIQUE INDEX `Insurance.policyNumber_unique`(`policyNumber`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -30,6 +31,7 @@ CREATE TABLE `User` (
     `licenseExpiry` DATETIME(3),
     `isActive` BOOLEAN NOT NULL DEFAULT true,
 
+    UNIQUE INDEX `User.contactNumber_unique`(`contactNumber`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -50,6 +52,7 @@ CREATE TABLE `Taxi` (
     `isActive` BOOLEAN NOT NULL DEFAULT true,
     `insuranceId` VARCHAR(191),
 
+    UNIQUE INDEX `Taxi.bodyNumber_unique`(`bodyNumber`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -61,12 +64,12 @@ CREATE TABLE `TaxiDriverMap` (
     `driverId` VARCHAR(191) NOT NULL,
     `taxiId` VARCHAR(191) NOT NULL,
     `startAt` DATETIME(3) NOT NULL,
-    `releaseOfficerId` VARCHAR(191) NOT NULL,
+    `releaseOfficerId` VARCHAR(191),
     `endAt` DATETIME(3),
-    `validatingOfficerId` VARCHAR(191) NOT NULL,
+    `validatingOfficerId` VARCHAR(191),
     `isActive` BOOLEAN NOT NULL DEFAULT true,
+    `remarks` VARCHAR(256),
 
-    UNIQUE INDEX `TaxiDriverMap_releaseOfficerId_unique`(`releaseOfficerId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -80,7 +83,7 @@ ALTER TABLE `TaxiDriverMap` ADD FOREIGN KEY (`driverId`) REFERENCES `User`(`id`)
 ALTER TABLE `TaxiDriverMap` ADD FOREIGN KEY (`taxiId`) REFERENCES `Taxi`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `TaxiDriverMap` ADD FOREIGN KEY (`releaseOfficerId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `TaxiDriverMap` ADD FOREIGN KEY (`releaseOfficerId`) REFERENCES `User`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `TaxiDriverMap` ADD FOREIGN KEY (`validatingOfficerId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `TaxiDriverMap` ADD FOREIGN KEY (`validatingOfficerId`) REFERENCES `User`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;

@@ -18,9 +18,9 @@ model Insurance {
   updatedAt         DateTime     @updatedAt
   taxis             Taxi[]
   provider          String
-  policyNumber      String
+  policyNumber      String       @unique
   coverageStartDate DateTime
-  coveragEndDate    DateTime
+  coverageEndDate   DateTime
   coverageType      CoverageType
   isActive          Boolean      @default(true)
 }
@@ -36,13 +36,13 @@ model User {
   lastName           String?
   role               UserRole
   birthdate          DateTime?
-  contactNumber      String
+  contactNumber      String          @unique
   emailAddress       String?
   licenseNumber      String?
   licenseExpiry      DateTime?
   isActive           Boolean         @default(true)
   drivers            TaxiDriverMap[] @relation("drivers")
-  releasingOfficers  TaxiDriverMap?  @relation("releasingOfficers")
+  releasingOfficers  TaxiDriverMap[] @relation("releasingOfficers")
   validatingOfficers TaxiDriverMap[] @relation("validatingOfficers")
 }
 
@@ -50,7 +50,7 @@ model Taxi {
   id                String          @id @default(cuid())
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
-  bodyNumber        String
+  bodyNumber        String          @unique
   plateNumber       String?
   conductionSticker String
   make              String
@@ -60,9 +60,9 @@ model Taxi {
   engineNumber      String
   chassisNumber     String
   isActive          Boolean         @default(true)
-  insurance         Insurance?      @relation(fields: [insuranceId], references: [id])
-  insuranceId       String?
   TaxiDriverMap     TaxiDriverMap[]
+  Insurance         Insurance?      @relation(fields: [insuranceId], references: [id])
+  insuranceId       String?
 }
 
 model TaxiDriverMap {
@@ -74,12 +74,13 @@ model TaxiDriverMap {
   taxi                Taxi      @relation(fields: [taxiId], references: [id])
   taxiId              String
   startAt             DateTime
-  releaseOfficer      User      @relation("releasingOfficers", fields: [releaseOfficerId], references: [id])
-  releaseOfficerId    String
+  releaseOfficer      User?     @relation("releasingOfficers", fields: [releaseOfficerId], references: [id])
+  releaseOfficerId    String?
   endAt               DateTime?
-  validatingOfficer   User      @relation("validatingOfficers", fields: [validatingOfficerId], references: [id])
-  validatingOfficerId String
+  validatingOfficer   User?     @relation("validatingOfficers", fields: [validatingOfficerId], references: [id])
+  validatingOfficerId String?
   isActive            Boolean   @default(true)
+  remarks             String?   @db.VarChar(256)
 }
 
 enum UserRole {
